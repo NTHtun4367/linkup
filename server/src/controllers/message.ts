@@ -58,6 +58,16 @@ export const sendMessage = asyncHandler(
     const { text, image_url } = req.body;
     const senderId = user?._id;
 
+    if (senderId?.toString() === receiverId.toString()) {
+      res.status(400).json({ message: "Cannot send message to yourself." });
+    }
+
+    const receiverExists = await User.exists({ _id: receiverId });
+
+    if (!receiverExists) {
+      res.status(404).json({ message: "Receiver not found." });
+    }
+
     let imageUrl;
     if (image_url) {
       const response = await uploadSingleImage(
