@@ -11,7 +11,7 @@ import { arcjetProtection } from "../middlewares/arcjet";
 
 const router = Router();
 
-router.use(arcjetProtection);
+// router.use(arcjetProtection);
 
 router.post("/register", registerValidator, validateRequest, register);
 router.post("/login", loginValidator, validateRequest, login);

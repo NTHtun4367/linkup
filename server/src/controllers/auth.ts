@@ -9,7 +9,7 @@ import { deleteImage, uploadSingleImage } from "../utils/cloudinary";
 
 // @route /api/auth/register
 // @desc Register new user
-// @access Public
+// @access POST | Public
 export const register = asyncHandler(async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
 
@@ -35,7 +35,7 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 
 // @route /api/auth/login
 // @desc Login to existing user's account
-// @access Public
+// @access POST | Public
 export const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
 
@@ -54,7 +54,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
 
 // @route /api/auth/logout
 // @desc Clear token
-// @access Public
+// @access POST | Public
 export const logout = asyncHandler(async (req: Request, res: Response) => {
   res.clearCookie("token", {
     httpOnly: true,
@@ -67,7 +67,7 @@ export const logout = asyncHandler(async (req: Request, res: Response) => {
 
 // @route /api/auth/update-profile
 // @desc Update user's profile
-// @access Public
+// @access PUT | Public
 export const updateProfile = asyncHandler(
   async (req: AuthRequest, res: Response) => {
     const { user } = req;
@@ -79,7 +79,7 @@ export const updateProfile = asyncHandler(
       await deleteImage(userDoc.profile_image.public_alt);
     }
 
-    const response = await uploadSingleImage(image_url, "linkup/profile-image");
+    const response = await uploadSingleImage(image_url, "linkup/profile-images");
 
     await User.findByIdAndUpdate(user?._id, {
       profile_image: {
