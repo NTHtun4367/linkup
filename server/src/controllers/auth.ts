@@ -79,7 +79,10 @@ export const updateProfile = asyncHandler(
       await deleteImage(userDoc.profile_image.public_alt);
     }
 
-    const response = await uploadSingleImage(image_url, "linkup/profile-images");
+    const response = await uploadSingleImage(
+      image_url,
+      "linkup/profile-images"
+    );
 
     await User.findByIdAndUpdate(user?._id, {
       profile_image: {
@@ -89,5 +92,22 @@ export const updateProfile = asyncHandler(
     });
 
     res.status(200).json({ message: "Profile image uploaded." });
+  }
+);
+
+// @route /api/auth/me
+// @desc Get login user's information
+// @access GET | Private
+export const getUserInfo = asyncHandler(
+  async (req: AuthRequest, res: Response) => {
+    const { user } = req;
+
+    const userDoc = await User.findById(user?._id).select("-password");
+
+    if (!userDoc) {
+      res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json(userDoc);
   }
 );

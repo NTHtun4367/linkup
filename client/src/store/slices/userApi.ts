@@ -1,3 +1,4 @@
+import type { User } from "@/types/user";
 import { apiSlice } from "./api";
 
 interface LoginInput {
@@ -9,6 +10,10 @@ interface RegisterInput extends LoginInput {
   name: string;
 }
 
+interface ProfileImageUpdateInput {
+  image_url: string;
+}
+
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     register: builder.mutation({
@@ -17,6 +22,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
     login: builder.mutation({
       query: (data: LoginInput) => ({
@@ -24,15 +30,37 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
+      invalidatesTags: ["User"],
     }),
     logout: builder.mutation({
       query: () => ({
         url: "auth/logout",
         method: "POST",
       }),
+      invalidatesTags: ["User"],
+    }),
+    currentUser: builder.query<User, void>({
+      query: () => ({
+        url: "auth/me",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
+    updateProfile: builder.mutation({
+      query: (data: ProfileImageUpdateInput) => ({
+        url: "auth/update-profile",
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["User"],
     }),
   }),
 });
 
-export const { useRegisterMutation, useLoginMutation, useLogoutMutation } =
-  userApiSlice;
+export const {
+  useRegisterMutation,
+  useLoginMutation,
+  useLogoutMutation,
+  useCurrentUserQuery,
+  useUpdateProfileMutation,
+} = userApiSlice;

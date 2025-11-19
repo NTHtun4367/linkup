@@ -20,7 +20,7 @@ app.use(cookieParser());
 
 // routes
 app.use("/api/auth", authRoutes);
-app.use("/api/auth", messageRoutes);
+app.use("/api/messages", messageRoutes);
 
 // errorHandler
 app.use(errorHandler);

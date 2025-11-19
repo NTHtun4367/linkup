@@ -1,4 +1,3 @@
-import { ModeToggle } from "@/components/ModeToggle";
 import type { RootState } from "@/store";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -20,7 +19,6 @@ function Main() {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <ModeToggle />
       <Outlet />
       <Toaster />
     </div>

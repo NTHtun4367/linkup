@@ -4,7 +4,7 @@ interface IMessage extends Document {
   senderId: Types.ObjectId;
   receiverId: Types.ObjectId;
   text: string;
-  image: string;
+  image?: string;
 }
 
 const messageSchema = new Schema<IMessage>(

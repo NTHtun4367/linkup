@@ -7,16 +7,17 @@ import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { store } from "./store/index.ts";
 import Main from "./layouts/Main.tsx";
+import Chat from "./pages/Chat.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
     children: [
-      // {
-      //   index: true,
-      //   element: <Chat />,
-      // },
+      {
+        index: true,
+        element: <Chat />,
+      },
       {
         path: "/register",
         element: <Register />,

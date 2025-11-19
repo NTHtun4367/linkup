@@ -54,7 +54,7 @@ function Register() {
   }, [navigate, userInfo]);
 
   return (
-    <div className="max-w-[450px] lg:mx-auto mx-6 my-6">
+    <div className="max-w-[450px] lg:mx-auto mx-6 mt-24">
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold italic">LinkUp</CardTitle>

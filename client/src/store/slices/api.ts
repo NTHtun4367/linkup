@@ -8,5 +8,6 @@ const baseUrl =
 export const apiSlice = createApi({
   reducerPath: "apiSlice",
   baseQuery: fetchBaseQuery({ baseUrl, credentials: "include" }),
+  tagTypes: ["User", "Messages"],
   endpoints: () => ({}),
 });
