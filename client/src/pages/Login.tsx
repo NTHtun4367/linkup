@@ -27,7 +27,7 @@ import { Button } from "@/components/ui/button";
 import type { LoginFormInputs } from "@/schema/login";
 import { setUserInfo } from "@/store/slices/auth";
 
-function Register() {
+function Login() {
   const [loginMutation, { isLoading }] = useLoginMutation();
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const navigate = useNavigate();
@@ -113,4 +113,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;

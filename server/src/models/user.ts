@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Document } from "mongoose";
 import bcrypt from "bcryptjs";
 
 interface IUser extends Document {
@@ -9,7 +9,7 @@ interface IUser extends Document {
     url: string;
     public_alt: string;
   };
-  matchPassword(enteredPassword: string): boolean;
+  matchPassword(enteredPassword: string): Promise<boolean>;
 }
 
 const userSchema = new Schema<IUser>(
@@ -28,12 +28,10 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     profile_image: {
-      type: [
-        {
-          url: String,
-          public_alt: String,
-        },
-      ],
+      type: {
+        url: String,
+        public_alt: String,
+      },
     },
   },
   { timestamps: true }
@@ -42,10 +40,12 @@ const userSchema = new Schema<IUser>(
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
+    return;
   }
 
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
+  next();
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword: string) {

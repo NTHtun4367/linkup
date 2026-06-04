@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Types } from "mongoose";
 import asyncHandler from "../utils/asyncHandler";
 import { User } from "../models/user";
 import { sendWelcomeEmail } from "../utils/sendEmail";
@@ -42,7 +43,7 @@ export const login = asyncHandler(async (req: Request, res: Response) => {
   const existingUser = await User.findOne({ email });
 
   if (existingUser && (await existingUser.matchPassword(password))) {
-    generateToken(res, existingUser._id);
+    generateToken(res, existingUser._id as Types.ObjectId);
     res.status(200).json({
       _id: existingUser._id,
     });
@@ -105,7 +106,8 @@ export const getUserInfo = asyncHandler(
     const userDoc = await User.findById(user?._id).select("-password");
 
     if (!userDoc) {
-      res.status(404).json({ message: "User not found." });
+      res.status(404);
+      throw new Error("User not found.");
     }
 
     res.status(200).json(userDoc);

@@ -56,11 +56,9 @@ function Chat() {
           </div>
         </CardContent>
       </Card>
-      <Card className="w-full h-full">
-        <CardContent>
-          <div>
-            {selectedUser ? <ChatContainer /> : <NoConversationPlaceholder />}
-          </div>
+      <Card className="w-full h-full relative flex flex-col px-6">
+        <CardContent className="flex-1 p-0 flex flex-col">
+          {selectedUser ? <ChatContainer /> : <NoConversationPlaceholder />}
         </CardContent>
       </Card>
     </div>
