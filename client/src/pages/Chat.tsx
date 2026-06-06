@@ -10,6 +10,7 @@ import { setActiveTab } from "@/store/slices/chat";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { MessageSquare, Users } from "lucide-react";
 
 function Chat() {
   const userInfo = useSelector((state: RootState) => state.auth.userInfo);
@@ -29,38 +30,45 @@ function Chat() {
   }, [userInfo, navigate]);
 
   return (
-    <div className="max-w-6xl h-[650px] flex items-center justify-center gap-2 bg-primary/15 p-2 my-4 rounded-2xl">
-      <Card className="w-[500px] h-full">
-        <CardContent>
-          <ProfileHeader />
-          <div className="flex items-center gap-2 mt-4 border-t border-t-primary/15 pt-4">
-            <Button
-              className="flex-1 cursor-pointer"
-              variant={activeTag === "chats" ? "default" : "secondary"}
-              size={"sm"}
-              onClick={() => activeTagHandler("chats")}
-            >
-              Chats
-            </Button>
-            <Button
-              className="flex-1 cursor-pointer"
-              variant={activeTag === "contacts" ? "default" : "secondary"}
-              size={"sm"}
-              onClick={() => activeTagHandler("contacts")}
-            >
-              Contacts
-            </Button>
-          </div>
-          <div className="mt-4 border-t border-t-primary/15 pt-4">
-            {activeTag === "chats" ? <ChatList /> : <ContactList />}
-          </div>
-        </CardContent>
-      </Card>
-      <Card className="w-full h-full relative flex flex-col px-6">
-        <CardContent className="flex-1 p-0 flex flex-col">
-          {selectedUser ? <ChatContainer /> : <NoConversationPlaceholder />}
-        </CardContent>
-      </Card>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-950 dark:to-slate-900 py-4 px-2">
+      <div className="max-w-6xl mx-auto h-[90vh] flex items-center justify-center gap-3 p-2">
+        {/* Sidebar Card */}
+        <Card className="w-[400px] h-full shadow-xl shadow-slate-200/50 dark:shadow-slate-900/30 border-border/60 overflow-hidden">
+          <CardContent className="p-4 h-full flex flex-col">
+            <ProfileHeader />
+            <div className="flex items-center gap-2 mt-4 mb-2 bg-slate-100 dark:bg-slate-800 p-1.5 rounded-xl">
+              <Button
+                className="flex-1 cursor-pointer rounded-lg transition-all duration-200"
+                variant={activeTag === "chats" ? "default" : "ghost"}
+                size={"sm"}
+                onClick={() => activeTagHandler("chats")}
+              >
+                <MessageSquare className="w-4 h-4 mr-2" />
+                Chats
+              </Button>
+              <Button
+                className="flex-1 cursor-pointer rounded-lg transition-all duration-200"
+                variant={activeTag === "contacts" ? "default" : "ghost"}
+                size={"sm"}
+                onClick={() => activeTagHandler("contacts")}
+              >
+                <Users className="w-4 h-4 mr-2" />
+                Contacts
+              </Button>
+            </div>
+            <div className="flex-1 overflow-hidden">
+              {activeTag === "chats" ? <ChatList /> : <ContactList />}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Chat Area Card */}
+        <Card className="flex-1 h-full shadow-xl shadow-slate-200/50 dark:shadow-slate-900/30 border-border/60 overflow-hidden">
+          <CardContent className="p-6 h-full flex flex-col">
+            {selectedUser ? <ChatContainer /> : <NoConversationPlaceholder />}
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 }
