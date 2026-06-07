@@ -24,6 +24,14 @@ export const messageApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Messages"],
     }),
+    reactToMessage: builder.mutation({
+      query: ({ messageId, emoji }) => ({
+        url: `messages/react/${messageId}`,
+        method: "POST",
+        body: { emoji },
+      }),
+      invalidatesTags: ["Messages"],
+    }),
   }),
 });
 
@@ -32,4 +40,5 @@ export const {
   useGetChatPartnersQuery,
   useGetMessagesByUserIdQuery,
   useSendMessageMutation,
+  useReactToMessageMutation,
 } = messageApiSlice;

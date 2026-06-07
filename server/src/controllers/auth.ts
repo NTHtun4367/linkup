@@ -87,7 +87,7 @@ export const updateProfile = asyncHandler(
 
     await User.findByIdAndUpdate(user?._id, {
       profile_image: {
-        url: response.image_url,
+        url: response.url,
         public_alt: response.public_alt,
       },
     });

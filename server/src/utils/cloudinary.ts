@@ -13,7 +13,19 @@ export const uploadSingleImage = async (image: string, folder_name: string) => {
   });
 
   return {
-    image_url: response.secure_url,
+    url: response.secure_url,
+    public_alt: response.public_id,
+  };
+};
+
+export const uploadFile = async (file: string, folder_name: string) => {
+  const response = await cloudinary.uploader.upload(file, {
+    folder: folder_name,
+    resource_type: "auto",
+  });
+
+  return {
+    url: response.secure_url,
     public_alt: response.public_id,
   };
 };
